@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+
 
 # Leitura dos dados a partir do arquivo CSV
 file_path = "bd.csv"  # Substitua pelo caminho correto, se necessário
@@ -78,22 +78,7 @@ st.sidebar.subheader("Pontuação Total por Setor")
 pontuacao_por_setor = df.groupby("Setor")["pontuacao"].sum()
 st.sidebar.bar_chart(pontuacao_por_setor)
 
-# Gráfico de pizza da pontuação total seccionada por setor
-st.sidebar.markdown("---")
-st.sidebar.subheader("Pontuação Total Seccionada por Setor")
-fig, ax = plt.subplots()
-ax.pie(pontuacao_por_setor, labels=pontuacao_por_setor.index, autopct='%1.1f%%', startangle=90)
-ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-st.sidebar.pyplot(fig)
 
-# Gráfico de pizza da quantidade de membros por setor
-st.sidebar.markdown("---")
-st.sidebar.subheader("Quantidade de Membros por Setor")
-membros_por_setor = df["Setor"].value_counts()
-fig_membros, ax_membros = plt.subplots()
-ax_membros.pie(membros_por_setor, labels=membros_por_setor.index, autopct='%1.1f%%', startangle=90)
-ax_membros.axis('equal')
-st.sidebar.pyplot(fig_membros)
 
 # Tabela com moda, média, mediana, primeiro quartil, terceiro quartil e desvio padrão dos pontos por setor
 st.sidebar.markdown("---")
@@ -101,3 +86,4 @@ st.sidebar.subheader("Estatísticas de Pontos por Setor")
 estatisticas_por_setor = df.groupby("Setor")["pontuacao"].agg(['mean', lambda x: x.mode().iloc[0], lambda x: x.median(),'std'])
 estatisticas_por_setor.columns = ['Média', 'Moda', 'Mediana','Desvio Padrão']
 st.sidebar.table(estatisticas_por_setor)
+
